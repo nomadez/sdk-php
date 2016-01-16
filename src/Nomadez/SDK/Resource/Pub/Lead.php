@@ -26,14 +26,18 @@ class Lead extends Resource
     public function createAnonymous($email, $firstName, $lastName, array $optionals = [])
     {
         $optionalValues = [
-            'studentNote'   => null,
-            'durationWeeks' => null,
+            'studentNote'    => null,
+            'durationWeeks'  => null,
+            'cityId'         => null,
+            'schoolId'       => null,
+            'schoolCourseId' => null,
+            'courseTypeId'   => null,
         ];
 
-        ArrayHelper::assocIndexesExist($optionalValues, $optionals);
+        ArrayHelper::assocIndexesExist($optionals, $optionalValues);
         $optionalValues = array_replace_recursive($optionalValues, $optionals);
 
-        $request = new Request('pub/leads', 'POST', [
+        $data = [
             'lead' => [
                 'createdBy'     => [
                     'email'   => $email,
@@ -42,17 +46,29 @@ class Lead extends Resource
                         'lastName'  => $lastName,
                     ],
                 ],
-                'city'          => [
-                    'id' => 1 // dublin
-                ],
-                'courseType'    => [
-                    'id' => 1,
-                ],
                 'dateStart'     => date('Y-m-d'),
                 'durationWeeks' => $optionalValues['durationWeeks'],
                 'studentNote'   => $optionalValues['studentNote'],
             ],
-        ]);
+        ];
+
+        if ($optionalValues['cityId']) {
+            $data['city']['id'] = $optionalValues['cityId'];
+        }
+
+        if ($optionalValues['courseTypeId']) {
+            $data['courseType']['id'] = $optionalValues['courseTypeId'];
+        }
+
+        if ($optionalValues['schoolId']) {
+            $data['school']['id'] = $optionalValues['schoolId'];
+        }
+
+        if ($optionalValues['schoolCourseId']) {
+            $data['schoolCourse']['id'] = $optionalValues['schoolCourseId'];
+        }
+
+        $request = new Request('pub/leads', 'POST', $data);
 
         return $this->client->sendRequest($request);
     }

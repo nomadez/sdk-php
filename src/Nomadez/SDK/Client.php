@@ -116,8 +116,8 @@ class Client
 
         $log = [
             'statusCode' => $response->getStatusCode(),
-            'headers'    => $response->getHeaders(),
             'body'       => $bodyDecoded,
+            //'headers'    => $response->getHeaders(),
         ];
 
         $this->log(LogLevel::DEBUG, $log);
