@@ -1,0 +1,6 @@
+vendor/
+bin/
+composer.lock
+codebench.php
+.idea/
+tests/Nomadez/SDK/config-custom.ini
