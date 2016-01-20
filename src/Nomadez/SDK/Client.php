@@ -117,6 +117,7 @@ class Client
         $log = [
             'statusCode' => $response->getStatusCode(),
             'body'       => $bodyDecoded,
+            'bodyRaw'    => $bodyRaw
             //'headers'    => $response->getHeaders(),
         ];
 

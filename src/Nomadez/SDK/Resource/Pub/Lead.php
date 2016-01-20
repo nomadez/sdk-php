@@ -26,12 +26,14 @@ class Lead extends Resource
     public function createAnonymous($email, $firstName, $lastName, array $optionals = [])
     {
         $optionalValues = [
-            'studentNote'    => null,
-            'durationWeeks'  => null,
-            'cityId'         => null,
-            'schoolId'       => null,
-            'schoolCourseId' => null,
-            'courseTypeId'   => null,
+            'studentNote'         => null,
+            'durationWeeks'       => null,
+            'cityId'              => null,
+            'schoolId'            => null,
+            'schoolCourseId'      => null,
+            'courseTypeId'        => null,
+            'affiliateId'         => null,
+            'affiliateCampaignId' => null,
         ];
 
         ArrayHelper::assocIndexesExist($optionals, $optionalValues);
@@ -39,7 +41,7 @@ class Lead extends Resource
 
         $data = [
             'lead' => [
-                'createdBy'     => [
+                'user'          => [
                     'email'   => $email,
                     'profile' => [
                         'firstName' => $firstName,
@@ -53,19 +55,27 @@ class Lead extends Resource
         ];
 
         if ($optionalValues['cityId']) {
-            $data['city']['id'] = $optionalValues['cityId'];
+            $data['lead']['city']['id'] = $optionalValues['cityId'];
         }
 
         if ($optionalValues['courseTypeId']) {
-            $data['courseType']['id'] = $optionalValues['courseTypeId'];
+            $data['lead']['courseType']['id'] = $optionalValues['courseTypeId'];
         }
 
         if ($optionalValues['schoolId']) {
-            $data['school']['id'] = $optionalValues['schoolId'];
+            $data['lead']['school']['id'] = $optionalValues['schoolId'];
         }
 
         if ($optionalValues['schoolCourseId']) {
-            $data['schoolCourse']['id'] = $optionalValues['schoolCourseId'];
+            $data['lead']['schoolCourse']['id'] = $optionalValues['schoolCourseId'];
+        }
+
+        if ($optionalValues['affiliateId']) {
+            $data['lead']['affiliate']['id'] = $optionalValues['affiliateId'];
+        }
+
+        if ($optionalValues['affiliateCampaignId']) {
+            $data['lead']['affiliateCampaign']['id'] = $optionalValues['affiliateCampaignId'];
         }
 
         $request = new Request('pub/leads', 'POST', $data);
