@@ -27,6 +27,10 @@ class CourseType extends Resource
         return $this->client->sendRequest($request);
     }
 
+    /**
+     * @return \Nomadez\SDK\Response
+     * @author Andreas Glaser
+     */
     public function getAll()
     {
         $request = new Request('course-type', 'GET');

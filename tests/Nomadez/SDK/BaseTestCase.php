@@ -71,7 +71,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
 
     public function init()
     {
-        // ovewrite as needed
+        // overwrite as needed
     }
 
     public function assertIsArray($data, $message = 'Expected value to be of type "array"')
