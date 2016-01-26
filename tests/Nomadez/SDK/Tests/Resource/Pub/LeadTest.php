@@ -25,6 +25,7 @@ class LeadTest extends BaseTestCase
             $this->faker->safeEmail,
             $this->faker->firstName,
             $this->faker->lastName,
+            1,
             [
                 'durationWeeks' => rand(4, 56),
                 'studentNote'   => $this->faker->sentence(),
@@ -32,6 +33,7 @@ class LeadTest extends BaseTestCase
                 'courseTypeId'  => 1,
             ]
         );
+
         $payload = $response->getBodyDecoded();
 
         $this->assertEquals(201, $response->getStatusCode());
@@ -43,7 +45,8 @@ class LeadTest extends BaseTestCase
      * @author Andreas Glaser
      */
     public function testAnonymousLeadSubmissionToSchoolLevel()
-    {return;
+    {
+        return;
         $leadPubRes = new Resource\Pub\Lead($this->client);
 
         $response = $leadPubRes->createAnonymous(

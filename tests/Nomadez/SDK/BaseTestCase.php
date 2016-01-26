@@ -4,7 +4,7 @@ namespace Nomadez\SDK;
 
 use Faker;
 use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\StreamHandler;
+use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 
 /**
@@ -57,7 +57,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
 
         if ($this->config['general']['logging.enabled']) {
             $logger = new Logger('default');
-            $handler = new StreamHandler(__DIR__ . '/../../logs/client.log');
+            $handler = new RotatingFileHandler(__DIR__ . '/../../logs/client.log', 2);
             $handler->setFormatter(new LineFormatter(null, null, true));
             $logger->pushHandler($handler);
 
@@ -65,5 +65,17 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         }
 
         $this->faker = Faker\Factory::create();
+
+        $this->init();
+    }
+
+    public function init()
+    {
+        // ovewrite as needed
+    }
+
+    public function assertIsArray($data, $message = 'Expected value to be of type "array"')
+    {
+        $this->assertTrue(is_array($data), $message);
     }
 }

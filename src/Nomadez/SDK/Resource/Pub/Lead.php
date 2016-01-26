@@ -18,12 +18,13 @@ class Lead extends Resource
      * @param       $email
      * @param       $firstName
      * @param       $lastName
+     * @param       $countryId
      * @param array $optionals
      *
      * @return \Nomadez\SDK\Response
      * @author Andreas Glaser
      */
-    public function createAnonymous($email, $firstName, $lastName, array $optionals = [])
+    public function createAnonymous($email, $firstName, $lastName, $countryId, array $optionals = [])
     {
         $optionalValues = [
             'studentNote'         => null,
@@ -41,11 +42,14 @@ class Lead extends Resource
 
         $data = [
             'lead' => [
-                'user'          => [
+                'userCreatedBy' => [
                     'email'   => $email,
                     'profile' => [
                         'firstName' => $firstName,
                         'lastName'  => $lastName,
+                        'country'   => [
+                            'id' => $countryId,
+                        ],
                     ],
                 ],
                 'dateStart'     => date('Y-m-d'),

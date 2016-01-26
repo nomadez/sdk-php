@@ -3,6 +3,7 @@
 namespace Nomadez\SDK;
 
 use AndreasGlaser\Helpers\ArrayHelper;
+use AndreasGlaser\Helpers\ValueHelper;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception as GuzzleException;
 use Nomadez\SDK\Exception\ClientException;
@@ -91,13 +92,15 @@ class Client
                     'timeout'         => $this->config['client.timeout'],
                     'connect_timeout' => $this->config['client.connect_timeout'],
                     'allow_redirects' => true,
-                    'body'            => $request->getPayload(),
+                    'body'            => null,
                 ],
             ];
 
-            $this->log(LogLevel::DEBUG, $data);
+            if (!ValueHelper::isEmpty($request->getPayload())) {
+                $data['options']['body'] = json_encode($request->getPayload());
+            }
 
-            $data['options']['body'] = json_encode($data['options']['body']);
+            $this->log(LogLevel::DEBUG, $data);
 
             $response = $this->guzzleHttpClient->request(
                 $data['method'],
