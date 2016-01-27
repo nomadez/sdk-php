@@ -37,7 +37,6 @@ class Client
         'client.timeout'         => 60,
         'client.connect_timeout' => 10,
         'request.timeout'        => 20,
-        'user.id'                => null,
         'headers'                => [],
     ];
 
@@ -56,8 +55,7 @@ class Client
      */
     public function __construct(array $config = [], $apiKey = null)
     {
-        ArrayHelper::assocIndexesExist($config, $this->config, true);
-        $this->config = array_replace_recursive($this->config, $config);
+        $this->setConfig($config);
 
         if (!empty($apiKey)) {
             $this->setApiKey($apiKey);
@@ -162,6 +160,20 @@ class Client
     public function removeApiKey()
     {
         $this->apiKey = null;
+
+        return $this;
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return $this
+     * @author Andreas Glaser
+     */
+    public function setConfig(array $config = [])
+    {
+        ArrayHelper::assocIndexesExist($config, $this->config, true);
+        $this->config = array_replace_recursive($this->config, $config);
 
         return $this;
     }
