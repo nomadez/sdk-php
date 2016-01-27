@@ -15,48 +15,37 @@ use Nomadez\SDK\Resource as Resource;
 class LeadTest extends BaseTestCase
 {
     /**
-     * @author Andreas Glaser
+     * @var Resource\Pub\Lead
      */
-    public function testAnonymousLeadSubmissionToCityLevel()
+    protected $leadPubRes;
+
+    public function init()
     {
-        $leadPubRes = new Resource\Pub\Lead($this->client);
-
-        $response = $leadPubRes->createAnonymous(
-            $this->faker->safeEmail,
-            $this->faker->firstName,
-            $this->faker->lastName,
-            1,
-            [
-                'durationWeeks' => rand(4, 56),
-                'studentNote'   => $this->faker->sentence(),
-                'cityId'        => 1,
-                'courseTypeId'  => 1,
-            ]
-        );
-
-        $payload = $response->getBodyDecoded();
-
-        $this->assertEquals(201, $response->getStatusCode());
-        $this->assertTrue(ValueHelper::isInteger($payload['id']));
-        $this->assertTrue(ValueHelper::isDateTime($payload['created_at']));
+        $this->leadPubRes = new Resource\Pub\Lead($this->client);
     }
 
     /**
      * @author Andreas Glaser
      */
-    public function testAnonymousLeadSubmissionToSchoolLevel()
+    public function testAnonymousLeadSubmissionToCityLevel()
     {
-        return;
-        $leadPubRes = new Resource\Pub\Lead($this->client);
 
-        $response = $leadPubRes->createAnonymous(
-            $this->faker->safeEmail,
-            $this->faker->firstName,
-            $this->faker->lastName,
+        $response = $this->leadPubRes->createAnonymous(
+            [
+                'user' => [
+                    'email'     => $this->faker->safeEmail,
+                    'firstName' => $this->faker->firstName,
+                    'lastName'  => $this->faker->lastName,
+                    'countryId' => 1,
+                ],
+                'lead' => [
+                    'dateStart' => $this->faker->dateTimeThisYear->format('Y-m-d'),
+                ],
+            ],
             [
                 'durationWeeks' => rand(4, 56),
                 'studentNote'   => $this->faker->sentence(),
-                'schoolId'      => 1,
+                'cityId'        => 1,
                 'courseTypeId'  => 1,
             ]
         );

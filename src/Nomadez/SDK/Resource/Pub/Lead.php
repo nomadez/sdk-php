@@ -3,6 +3,7 @@
 namespace Nomadez\SDK\Resource\Pub;
 
 use AndreasGlaser\Helpers\ArrayHelper;
+use Nomadez\SDK\Helpers\ArrayHelperExt;
 use Nomadez\SDK\Request;
 use Nomadez\SDK\Resource;
 
@@ -15,17 +16,26 @@ use Nomadez\SDK\Resource;
 class Lead extends Resource
 {
     /**
-     * @param       $email
-     * @param       $firstName
-     * @param       $lastName
-     * @param       $countryId
+     * @param array $required
      * @param array $optionals
      *
      * @return \Nomadez\SDK\Response
      * @author Andreas Glaser
      */
-    public function createAnonymous($email, $firstName, $lastName, $countryId, array $optionals = [])
+    public function createAnonymous(array $required, array $optionals = [])
     {
+        $requiredValues = [
+            'user' => [
+                'email',
+                'firstName',
+                'lastName',
+                'countryId',
+            ],
+            'lead' => [
+                'dateStart',
+            ],
+        ];
+
         $optionalValues = [
             'studentNote'         => null,
             'durationWeeks'       => null,
@@ -37,22 +47,25 @@ class Lead extends Resource
             'affiliateCampaignId' => null,
         ];
 
+        // "validate" input
+        ArrayHelperExt::indexesExist($requiredValues, $required);
         ArrayHelper::assocIndexesExist($optionals, $optionalValues);
+
         $optionalValues = array_replace_recursive($optionalValues, $optionals);
 
         $data = [
             'lead' => [
                 'userCreatedBy' => [
-                    'email'   => $email,
+                    'email'   => $required['user']['email'],
                     'profile' => [
-                        'firstName' => $firstName,
-                        'lastName'  => $lastName,
+                        'firstName' => $required['user']['firstName'],
+                        'lastName'  => $required['user']['lastName'],
                         'country'   => [
-                            'id' => $countryId,
+                            'id' => $required['user']['countryId'],
                         ],
                     ],
                 ],
-                'dateStart'     => date('Y-m-d'),
+                'dateStart'     => $required['lead']['dateStart'],
                 'durationWeeks' => $optionalValues['durationWeeks'],
                 'studentNote'   => $optionalValues['studentNote'],
             ],
