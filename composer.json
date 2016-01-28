@@ -17,10 +17,10 @@
     }
   ],
   "require": {
-    "php": ">=5.4",
+    "php": ">=5.5",
     "guzzlehttp/guzzle": "^6.1",
     "psr/log": "^1",
-    "andreas-glaser/php-helpers": "^1",
+    "andreas-glaser/php-helpers": "dev-master",
     "fzaninotto/faker": "^1.5"
   },
   "require-dev": {
