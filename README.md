@@ -2,7 +2,7 @@
 Nomadez SDK written in PHP
 
 ##Installation
-```bash
+```shell
 composer require nomadez/sdk-php dev-master
 ```
 
@@ -13,6 +13,8 @@ use Nomadez\SDK\Resource as Resource;
 
 $client = new Client();
 
+// authenticate credentials and receive api key
+
 $userPubResource = new Resource\Pub\User($client);
 
 $response = $userPubResource->auth(
@@ -21,4 +23,6 @@ $response = $userPubResource->auth(
 );
 
 $payload = $response->getBodyDecoded();
+
+$client->setApiKey($payload['api_key']);
 ```
