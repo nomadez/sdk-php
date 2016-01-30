@@ -3,7 +3,6 @@
 namespace Nomadez\SDK\Resource\Pub;
 
 use AndreasGlaser\Helpers\ArrayHelper;
-use AndreasGlaser\Helpers\DateHelper;
 use Nomadez\SDK\Helpers\ArrayHelperExt;
 use Nomadez\SDK\Request;
 use Nomadez\SDK\Resource;
@@ -33,7 +32,7 @@ class Lead extends Resource
                 'countryId',
             ],
             'lead' => [
-                'dateStart',
+                'leadDateStartId',
             ],
         ];
 
@@ -66,7 +65,9 @@ class Lead extends Resource
                         ],
                     ],
                 ],
-                'dateStart'     => DateHelper::formatOrNull($required['lead']['dateStart'], 'Y-m-d'),
+                'leadDateStart' => [
+                    'id' => $required['lead']['leadDateStartId'],
+                ],
                 'durationWeeks' => $optionalValues['durationWeeks'],
                 'studentNote'   => $optionalValues['studentNote'],
             ],

@@ -29,7 +29,6 @@ class LeadTest extends BaseTestCase
      */
     public function testAnonymousLeadSubmissionToCityLevel()
     {
-
         $response = $this->leadPubRes->createAnonymous(
             [
                 'user' => [
@@ -39,7 +38,7 @@ class LeadTest extends BaseTestCase
                     'countryId' => 1,
                 ],
                 'lead' => [
-                    'dateStart' => $this->faker->dateTimeThisYear->format('Y-m-d'),
+                    'leadDateStartId' => rand(1, 4),
                 ],
             ],
             [

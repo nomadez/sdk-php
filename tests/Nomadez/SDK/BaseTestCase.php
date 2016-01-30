@@ -74,8 +74,26 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         // overwrite as needed
     }
 
+    /**
+     * @param        $data
+     * @param string $message
+     *
+     * @author Andreas Glaser
+     */
     public function assertIsArray($data, $message = 'Expected value to be of type "array"')
     {
         $this->assertTrue(is_array($data), $message);
+    }
+
+    /**
+     * @param       $key
+     * @param array $array
+     *
+     * @author Andreas Glaser
+     */
+    public function assertArrayKeyExistsNotEmpty($key, array $array)
+    {
+        $this->assertArrayHasKey($key, $array);
+        $this->assertNotEmpty($array[$key]);
     }
 }
