@@ -3,7 +3,6 @@
 namespace Nomadez\SDK\Resource\Pub;
 
 use AndreasGlaser\Helpers\ArrayHelper;
-use Nomadez\SDK\Helpers\ArrayHelperExt;
 use Nomadez\SDK\Request;
 use Nomadez\SDK\Resource;
 
@@ -16,85 +15,15 @@ use Nomadez\SDK\Resource;
 class Lead extends Resource
 {
     /**
-     * @param array $required
-     * @param array $optionals
+     * @param array $data
      *
      * @return \Nomadez\SDK\Response
      * @author Andreas Glaser
      */
-    public function createAnonymous(array $required, array $optionals = [])
+    public function create(array $data)
     {
-        $requiredValues = [
-            'user' => [
-                'email',
-                'firstName',
-                'lastName',
-                'countryId',
-            ],
-            'lead' => [
-                'leadDateStartId',
-            ],
-        ];
-
-        $optionalValues = [
-            'studentNote'         => null,
-            'durationWeeks'       => null,
-            'cityId'              => null,
-            'schoolId'            => null,
-            'schoolCourseId'      => null,
-            'courseTypeId'        => null,
-            'affiliateId'         => null,
-            'affiliateCampaignId' => null,
-        ];
-
-        // "validate" input
-        ArrayHelperExt::indexesExist($requiredValues, $required);
-        ArrayHelper::assocIndexesExist($optionals, $optionalValues);
-
-        $optionalValues = array_replace_recursive($optionalValues, $optionals);
-
-        $data = [
-            'lead' => [
-                'userCreatedBy' => [
-                    'email'   => $required['user']['email'],
-                    'profile' => [
-                        'firstName' => $required['user']['firstName'],
-                        'lastName'  => $required['user']['lastName'],
-                        'country'   => [
-                            'id' => $required['user']['countryId'],
-                        ],
-                    ],
-                ],
-                'leadDateStart' => [
-                    'id' => $required['lead']['leadDateStartId'],
-                ],
-                'durationWeeks' => $optionalValues['durationWeeks'],
-                'studentNote'   => $optionalValues['studentNote'],
-            ],
-        ];
-
-        if ($optionalValues['cityId']) {
-            $data['lead']['city']['id'] = $optionalValues['cityId'];
-        }
-
-        if ($optionalValues['courseTypeId']) {
-            $data['lead']['courseType']['id'] = $optionalValues['courseTypeId'];
-        }
-
-        if ($optionalValues['schoolId']) {
-            $data['lead']['school']['id'] = $optionalValues['schoolId'];
-        }
-
-        if ($optionalValues['schoolCourseId']) {
-            $data['lead']['schoolCourse']['id'] = $optionalValues['schoolCourseId'];
-        }
-
-        if ($optionalValues['affiliateId']) {
-            $data['lead']['affiliate']['id'] = $optionalValues['affiliateId'];
-        }
-
-        if ($optionalValues['affiliateCampaignId']) {
-            $data['lead']['affiliateCampaign']['id'] = $optionalValues['affiliateCampaignId'];
+        if (!array_key_exists('lead', $data)) {
+            $data['lead'] = $data;
         }
 
         $request = new Request('pub/leads', 'POST', $data);

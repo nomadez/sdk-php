@@ -94,6 +94,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     public function assertArrayKeyExistsNotEmpty($key, array $array)
     {
         $this->assertArrayHasKey($key, $array);
-        $this->assertNotEmpty($array[$key]);
+        $this->assertTrue($array[$key] !== null && $array[$key] !== '');
     }
 }

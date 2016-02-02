@@ -26,26 +26,51 @@ class LeadTest extends BaseTestCase
 
     /**
      * @author Andreas Glaser
+     * @group  new
      */
     public function testAnonymousLeadSubmissionToCityLevel()
     {
-        $response = $this->leadPubRes->createAnonymous(
+        $courseClasses = [
+            null,
+            1,
+            2,
+        ];
+
+        $response = $this->leadPubRes->create(
             [
-                'user' => [
-                    'email'     => $this->faker->safeEmail,
-                    'firstName' => $this->faker->firstName,
-                    'lastName'  => $this->faker->lastName,
-                    'countryId' => 1,
-                ],
                 'lead' => [
-                    'leadDateStartId' => rand(1, 4),
+                    'userCreatedBy' => [
+                        'email'   => $this->faker->safeEmail,
+                        'profile' => [
+                            'firstName' => $this->faker->firstName,
+                            'lastName'  => $this->faker->lastName,
+                            'phone'     => $this->faker->phoneNumber,
+                            'country'   => [
+                                'id' => 1,
+                            ],
+                            'city'      => [
+                                'id' => 1,
+                            ],
+                        ],
+                    ],
+                    'durationWeeks' => rand(4, 56),
+                    'studentNote'   => $this->faker->sentence(),
+                    'country'       => [
+                        'id' => 1,
+                    ],
+                    'city'          => [
+                        'id' => 1,
+                    ],
+                    'courseType'    => [
+                        'id' => 1,
+                    ],
+                    'courseClass'   => [
+                        'id' => $courseClasses[array_rand($courseClasses)],
+                    ],
+                    'leadDateStart' => [
+                        'id' => rand(1, 4),
+                    ],
                 ],
-            ],
-            [
-                'durationWeeks' => rand(4, 56),
-                'studentNote'   => $this->faker->sentence(),
-                'cityId'        => 1,
-                'courseTypeId'  => 1,
             ]
         );
 
