@@ -2,6 +2,7 @@
 
 namespace Nomadez\SDK\Tests\Resource;
 
+use AndreasGlaser\Helpers\ArrayHelper;
 use AndreasGlaser\Helpers\ValueHelper;
 use Nomadez\SDK\BaseTestCase;
 use Nomadez\SDK\Resource as Resource;
@@ -52,8 +53,7 @@ class CountryTest extends BaseTestCase
      */
     public function testGet(array $countryArrays)
     {
-        $key = array_rand($countryArrays);
-        $countryArray = $countryArrays[$key];
+        $countryArray = ArrayHelper::getRandomValue($countryArrays);
 
         $response = $this->resource->get($countryArray['id']);
         $payload = $response->getBodyDecoded();

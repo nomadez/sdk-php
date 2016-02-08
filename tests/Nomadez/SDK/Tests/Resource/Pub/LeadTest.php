@@ -25,8 +25,9 @@ class LeadTest extends BaseTestCase
     }
 
     /**
-     * @author Andreas Glaser
-     * @group  new
+     * @author  Andreas Glaser
+     *
+     * @todo    Complete this method!
      */
     public function testAnonymousLeadSubmissionToCityLevel()
     {
@@ -55,10 +56,10 @@ class LeadTest extends BaseTestCase
                     ],
                     'durationWeeks' => rand(4, 56),
                     'studentNote'   => $this->faker->sentence(),
-                    'country'       => [
+                    'countryDest'   => [
                         'id' => 1,
                     ],
-                    'city'          => [
+                    'cityDest'      => [
                         'id' => 1,
                     ],
                     'courseType'    => [

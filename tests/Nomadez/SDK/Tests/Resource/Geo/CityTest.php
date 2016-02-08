@@ -2,6 +2,7 @@
 
 namespace Nomadez\SDK\Tests\Resource;
 
+use AndreasGlaser\Helpers\ArrayHelper;
 use AndreasGlaser\Helpers\ValueHelper;
 use Nomadez\SDK\BaseTestCase;
 use Nomadez\SDK\Resource as Resource;
@@ -54,8 +55,7 @@ class CityTest extends BaseTestCase
      */
     public function testGet(array $cityArrays)
     {
-        $key = array_rand($cityArrays);
-        $cityArray = $cityArrays[$key];
+        $cityArray = ArrayHelper::getRandomValue($cityArrays);
 
         $response = $this->resource->get($cityArray['id']);
         $payload = $response->getBodyDecoded();

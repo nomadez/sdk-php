@@ -2,6 +2,7 @@
 
 namespace Nomadez\SDK\Tests\Resource;
 
+use AndreasGlaser\Helpers\ArrayHelper;
 use Nomadez\SDK\BaseTestCase;
 use Nomadez\SDK\Resource as Resource;
 
@@ -26,7 +27,6 @@ class CourseClassTest extends BaseTestCase
     /**
      * @return array
      * @author Andreas Glaser
-     * @group  new
      */
     public function testGetAll()
     {
@@ -51,8 +51,7 @@ class CourseClassTest extends BaseTestCase
      */
     public function testGet(array $courseClassArrays)
     {
-        $key = array_rand($courseClassArrays);
-        $courseClassArray = $courseClassArrays[$key];
+        $courseClassArray =ArrayHelper::getRandomValue($courseClassArrays);
 
         $response = $this->resource->get($courseClassArray['id']);
         $payload = $response->getBodyDecoded();

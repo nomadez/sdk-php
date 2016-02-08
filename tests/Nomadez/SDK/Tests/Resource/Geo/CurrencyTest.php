@@ -2,6 +2,7 @@
 
 namespace Nomadez\SDK\Tests\Resource;
 
+use AndreasGlaser\Helpers\ArrayHelper;
 use AndreasGlaser\Helpers\ValueHelper;
 use Nomadez\SDK\BaseTestCase;
 use Nomadez\SDK\Resource as Resource;
@@ -54,8 +55,7 @@ class CurrencyTest extends BaseTestCase
      */
     public function testGet(array $currencyArrays)
     {
-        $key = array_rand($currencyArrays);
-        $currencyArray = $currencyArrays[$key];
+        $currencyArray = ArrayHelper::getRandomValue($currencyArrays);
 
         $response = $this->resource->get($currencyArray['id']);
         $payload = $response->getBodyDecoded();
