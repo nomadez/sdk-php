@@ -2,7 +2,6 @@
 
 namespace Nomadez\SDK\Resource\Pub;
 
-use AndreasGlaser\Helpers\ArrayHelper;
 use Nomadez\SDK\Request;
 use Nomadez\SDK\Resource;
 

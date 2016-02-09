@@ -2,7 +2,7 @@
 
 namespace Nomadez\SDK\Tests\Resource\Country;
 
-use AndreasGlaser\Helpers\ArrayHelper;
+use AndreasGlaser\Helpers\ValueHelper;
 use Nomadez\SDK\BaseTestCase;
 use Nomadez\SDK\Resource as Resource;
 
@@ -28,39 +28,33 @@ class RegionTest extends BaseTestCase
      * @return array
      * @author Andreas Glaser
      */
-    public function testGetAll()
+    public function testGet()
     {
-        $response = $this->resource->getAll(85);
-        $payload = $response->getBodyDecoded();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertIsArray($payload);
-
-        foreach ($payload AS $regionArray) {
-            $this->assertRegionArray($regionArray);
-        }
-
-        return $payload;
-    }
-
-    /**
-     * @param array $regionArrays
-     *
-     * @return array
-     * @author  Andreas Glaser
-     *
-     * @depends testGetAll
-     */
-    public function testGet(array $regionArrays)
-    {
-        $regionArray = ArrayHelper::getRandomValue($regionArrays);
-
-        $response = $this->resource->get($regionArray['country']['id'], $regionArray['id']);
+        $response = $this->resource->get(85, 52);
         $payload = $response->getBodyDecoded();
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertIsArray($payload);
         $this->assertRegionArray($payload);
+
+        return $payload;
+    }
+
+    /**
+     * @return array
+     * @author Andreas Glaser
+     */
+    public function testGetCities()
+    {
+        $response = $this->resource->getCities(85, 52); // todo: make this dynamic
+        $payload = $response->getBodyDecoded();
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertIsArray($payload);
+
+        foreach ($payload AS $cityArray) {
+            $this->assertCityArray($cityArray);
+        }
 
         return $payload;
     }
@@ -77,5 +71,23 @@ class RegionTest extends BaseTestCase
         $this->assertArrayKeyExistsNotEmpty('name', $regionArray);
         $this->assertArrayKeyExistsNotEmpty('country', $regionArray);
         $this->assertArrayKeyExistsNotEmpty('id', $regionArray['country']);
+    }
+
+    /**
+     * @param $cityArray
+     *
+     * @author Andreas Glaser
+     */
+    private function assertCityArray($cityArray)
+    {
+        $this->assertArrayKeyExistsNotEmpty('id', $cityArray);
+        $this->assertArrayKeyExistsNotEmpty('slug', $cityArray);
+        $this->assertArrayKeyExistsNotEmpty('name', $cityArray);
+        $this->assertArrayKeyExistsNotEmpty('coordinate', $cityArray);
+
+        $this->assertTrue(ValueHelper::isInteger($cityArray['id']));
+        $this->assertRegExp('/^[a-z0-9-]+$/', $cityArray['slug']);
+        $this->assertNotEmpty($cityArray['name']);
+        $this->assertNotEmpty($cityArray['coordinate']);
     }
 }

@@ -1,8 +1,7 @@
 <?php
 
-namespace Nomadez\SDK\Tests\Resource;
+namespace Nomadez\SDK\Tests\Resource\Country\Region;
 
-use AndreasGlaser\Helpers\ArrayHelper;
 use AndreasGlaser\Helpers\ValueHelper;
 use Nomadez\SDK\BaseTestCase;
 use Nomadez\SDK\Resource as Resource;
@@ -10,54 +9,28 @@ use Nomadez\SDK\Resource as Resource;
 /**
  * Class CityTest
  *
- * @package Nomadez\SDK\Tests\Resource
+ * @package Nomadez\SDK\Tests\Resource\Country\Region
  * @author  Andreas Glaser
  */
 class CityTest extends BaseTestCase
 {
     /**
-     * @var Resource\Geo\City
+     * @var Resource\Geo\Country\Region\City
      */
     protected $resource;
 
     public function init()
     {
-        $this->resource = new Resource\Geo\City($this->client);
+        $this->resource = new Resource\Geo\Country\Region\City($this->client);
     }
 
     /**
      * @return array
      * @author Andreas Glaser
      */
-    public function testGetAll()
+    public function testGet()
     {
-        $response = $this->resource->getAll();
-        $payload = $response->getBodyDecoded();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertIsArray($payload);
-
-        foreach ($payload AS $cityArray) {
-            $this->assertCityArray($cityArray);
-        }
-
-        return $payload;
-    }
-
-    /**
-     * @param array $cityArrays
-     *
-     * @return array
-     *
-     * @author  Andreas Glaser
-     *
-     * @depends testGetAll
-     */
-    public function testGet(array $cityArrays)
-    {
-        $cityArray = ArrayHelper::getRandomValue($cityArrays);
-
-        $response = $this->resource->get($cityArray['id']);
+        $response = $this->resource->get(85, 52, 1); // todo: make this dynamic
         $payload = $response->getBodyDecoded();
 
         $this->assertEquals(200, $response->getStatusCode());

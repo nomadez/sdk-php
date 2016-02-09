@@ -29,13 +29,14 @@ class Region extends Resource
 
     /**
      * @param $countryId
+     * @param $regionId
      *
      * @return \Nomadez\SDK\Response
      * @author Andreas Glaser
      */
-    public function getAll($countryId)
+    public function getCities($countryId, $regionId)
     {
-        $request = new Request(sprintf('geo/countries/%d/regions', $countryId), 'GET');
+        $request = new Request(sprintf('geo/countries/%d/regions/%d/cities', $countryId, $regionId), 'GET');
 
         return $this->client->sendRequest($request);
     }

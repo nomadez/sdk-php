@@ -13,7 +13,6 @@ use Nomadez\SDK\Resource;
  */
 class Country extends Resource
 {
-
     /**
      * @param $countryId
      *
@@ -34,6 +33,19 @@ class Country extends Resource
     public function getAll()
     {
         $request = new Request('geo/countries', 'GET');
+
+        return $this->client->sendRequest($request);
+    }
+
+    /**
+     * @param $countryId
+     *
+     * @return \Nomadez\SDK\Response
+     * @author Andreas Glaser
+     */
+    public function getRegions($countryId)
+    {
+        $request = new Request(sprintf('geo/countries/%d/regions', $countryId), 'GET');
 
         return $this->client->sendRequest($request);
     }

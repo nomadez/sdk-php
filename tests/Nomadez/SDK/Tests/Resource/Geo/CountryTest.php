@@ -64,6 +64,25 @@ class CountryTest extends BaseTestCase
     }
 
     /**
+     * @return array
+     * @author Andreas Glaser
+     */
+    public function testGetRegions()
+    {
+        $response = $this->resource->getRegions(85);
+        $payload = $response->getBodyDecoded();
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertIsArray($payload);
+
+        foreach ($payload AS $regionArray) {
+            $this->assertRegionArray($regionArray);
+        }
+
+        return $payload;
+    }
+
+    /**
      * @param $countryArray
      *
      * @author Andreas Glaser
@@ -88,6 +107,20 @@ class CountryTest extends BaseTestCase
         $this->assertNotEmpty($countryArray['phone_country_code']);
         $this->assertNotEmpty($countryArray['currency']);
         $this->assertNotEmpty($countryArray['coordinate']);
+    }
+
+    /**
+     * @param $regionArray
+     *
+     * @author Andreas Glaser
+     */
+    private function assertRegionArray($regionArray)
+    {
+        $this->assertArrayKeyExistsNotEmpty('id', $regionArray);
+        $this->assertArrayKeyExistsNotEmpty('slug', $regionArray);
+        $this->assertArrayKeyExistsNotEmpty('name', $regionArray);
+        $this->assertArrayKeyExistsNotEmpty('country', $regionArray);
+        $this->assertArrayKeyExistsNotEmpty('id', $regionArray['country']);
     }
 
 }

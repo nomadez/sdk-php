@@ -51,7 +51,7 @@ class CourseClassTest extends BaseTestCase
      */
     public function testGet(array $courseClassArrays)
     {
-        $courseClassArray =ArrayHelper::getRandomValue($courseClassArrays);
+        $courseClassArray = ArrayHelper::getRandomValue($courseClassArrays);
 
         $response = $this->resource->get($courseClassArray['id']);
         $payload = $response->getBodyDecoded();
