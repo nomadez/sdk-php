@@ -32,7 +32,7 @@ class Client
      * @var array
      */
     protected $config = [
-        'api.url'                => 'http://nomadez.com/api/',
+        'api.url'                => 'https://nomadez.com/api/',
         'api.key.header'         => 'X-API-KEY',
         'client.timeout'         => 60,
         'client.connect_timeout' => 10,
