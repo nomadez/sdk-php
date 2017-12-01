@@ -1,7 +1,7 @@
-#Nomadez SDK - PHP
+# Nomadez SDK - PHP
 Nomadez SDK written in PHP
 
-##Installation
+## Installation
 ```shell
 composer require nomadez/sdk-php dev-master
 ```
